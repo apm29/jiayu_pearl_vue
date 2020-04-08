@@ -8,7 +8,7 @@
 
 
       <v-toolbar-title class="font-weight-black headline">
-        佳谕珍珠
+        Apm29's Studio
       </v-toolbar-title>
     </v-app-bar>
 
