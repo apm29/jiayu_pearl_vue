@@ -130,7 +130,7 @@
 
                     <v-row>
                         <v-col
-                                v-for="({ icon, title, text }, i) in features"
+                                v-for="({ icon, title, text ,url }, i) in features"
                                 :key="i"
                                 cols="12"
                                 md="4"
@@ -140,30 +140,26 @@
                                     color="grey lighten-5"
                                     flat
                             >
-                                <v-theme-provider dark>
-                                    <div>
-                                        <v-avatar
-                                                color="primary"
-                                                size="88"
-                                        >
-                                            <v-icon
-                                                    large
-                                                    v-text="icon"
-                                            ></v-icon>
-                                        </v-avatar>
-                                    </div>
-                                </v-theme-provider>
+                                <v-img :src="url">
+                                    <v-theme-provider dark>
+                                        <div>
 
-                                <v-card-title
-                                        class="justify-center font-weight-black text-uppercase"
-                                        v-text="title"
-                                ></v-card-title>
 
-                                <v-card-text
-                                        class="subtitle-1"
-                                        v-text="text"
-                                >
-                                </v-card-text>
+                                        </div>
+                                    </v-theme-provider>
+
+                                    <v-card-title
+                                            class="justify-center font-weight-black text-uppercase white--text"
+                                            v-text="title"
+                                    ></v-card-title>
+
+                                    <v-card-text
+                                            class="subtitle-1"
+                                            v-text="text"
+                                    >
+                                    </v-card-text>
+                                </v-img>
+
                             </v-card>
                         </v-col>
                     </v-row>
@@ -281,6 +277,7 @@
                                 <v-text-field
                                         flat
                                         label="Name*"
+                                        v-model="form.name"
                                         solo
                                 ></v-text-field>
                             </v-col>
@@ -289,6 +286,7 @@
                                 <v-text-field
                                         flat
                                         label="Email*"
+                                        v-model="form.email"
                                         solo
                                 ></v-text-field>
                             </v-col>
@@ -297,6 +295,7 @@
                                 <v-text-field
                                         flat
                                         label="Subject*"
+                                        v-model="form.subject"
                                         solo
                                 ></v-text-field>
                             </v-col>
@@ -305,6 +304,7 @@
                                 <v-textarea
                                         flat
                                         label="Message*"
+                                        v-model="form.message"
                                         solo
                                 ></v-textarea>
                             </v-col>
@@ -316,8 +316,9 @@
                                 <v-btn
                                         color="accent"
                                         x-large
+                                        @click="submit"
                                 >
-                                    Submit
+                                    提交
                                 </v-btn>
                             </v-col>
                         </v-row>
@@ -341,6 +342,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
 
   export default {
     name: 'App',
@@ -367,14 +369,17 @@
         features: [
           {
             icon: 'mdi-account-group-outline',
+            url: 'https://jiayu-pearl-mall.oss-cn-beijing.aliyuncs.com/images/akoya%E8%80%B3%E9%92%89/IMG_8757.JPG',
             title: '淡水珠',
           },
           {
             icon: 'mdi-update',
+            url: 'https://jiayu-pearl-mall.oss-cn-beijing.aliyuncs.com/images/%E5%8D%97%E6%B4%8B%E9%87%91%E7%8F%A0%E8%B7%AF%E8%B7%AF%E9%80%9A%E5%90%8A%E5%9D%A0/IMG_8772.JPG',
             title: '海水珠',
           },
           {
             icon: 'mdi-shield-outline',
+            url: 'https://jiayu-pearl-mall.oss-cn-beijing.aliyuncs.com/images/%E7%BA%AF%E9%93%B6%E8%91%AB%E8%8A%A6%E9%A1%B9%E9%93%BE/IMG_8771.JPG',
             title: '配件',
           },
         ],
@@ -383,7 +388,22 @@
           ['330+', '品类'],
           ['诸暨', '货源地'],
         ],
+        form: {},
       }
+    },
+
+    methods: {
+      submit: async function () {
+        let response = await axios({
+          url: "/dashboard/submitContactInfo",
+          method: 'post',
+          data: this.form,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        console.log(response)
+      },
     },
   }
 </script>
