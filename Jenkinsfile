@@ -51,6 +51,7 @@ pipeline {
             sh 'ls -l ./dist/'
 
             //sshRemove (remote: remoteConfig, path: '/home/nginx/www/dashboard/')
+            sshCommand(remote:remoteConfig,command:'rm -r  /home/nginx/www/dashboard/dist/')
             sshPut (remote: remoteConfig, from: './dist/', into: '/home/nginx/www/dashboard/')
             sshCommand(remote:remoteConfig,command:'mv  /home/nginx/www/dashboard/dist/* /home/nginx/www/dashboard/')
           }
