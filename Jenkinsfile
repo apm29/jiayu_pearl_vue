@@ -50,7 +50,7 @@ pipeline {
             // 本地创建一个 test.sh 脚本，用来发送到远端执行
             sh 'ls -l ./dist/'
 
-            sshRemove (remote: remoteConfig, path: '/home/nginx/www/dashboard/')
+            //sshRemove (remote: remoteConfig, path: '/home/nginx/www/dashboard/')
             sshPut (remote: remoteConfig, from: './dist/', into: '/home/nginx/www/dashboard/')
           }
         }
